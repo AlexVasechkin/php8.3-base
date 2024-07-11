@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: php8.3-fpm_app
+    image: php8.3-fpm
+    # command: ["nginx", "-g", "daemon off;"]
+    # command: ["php-fpm"]
+    command: ["sh", "/usr/local/entrypoint.sh"]
+    volumes:
+      - ./supervisor/prod:/etc/supervisor/conf.d
+      - ./html:/var/www/html
+      - ./php/php-fpm/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "4080:80"
